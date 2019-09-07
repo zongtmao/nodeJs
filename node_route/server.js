@@ -1,26 +1,10 @@
 let http = require("http");
 let fs = require("fs");
 
-function startServer() {
+function startServer(router, routePathObj) {
     let onRequest = function(request, response) {
         // request.url 路由路径
-        if (request.url === "/" || request.url === "/home") {
-            response.writeHead(200, { "Content-type": "text/html" });
-            fs.createReadStream(__dirname + "/index.html").pipe(response);
-        } else if (request.url === "/review") {
-            response.writeHead(200, { "Content-type": "text/html" });
-            fs.createReadStream(__dirname + "/review.html").pipe(response);
-        } else if (request.url === "/api/v1/boxs") {
-            response.writeHead(200, { "Content-type": "application/json" });
-            let jsonObj = {
-                name: 'zongtmao',
-                work: 'web'
-            }
-            response.end(JSON.stringify(jsonObj));
-        } else {
-            response.writeHead(200, { "Content-type": "text/html" });
-            fs.createReadStream(__dirname + "/404.html").pipe(response);
-        }
+        router(request.url, routePathObj, response);
     }
 
     let server = http.createServer(onRequest);
