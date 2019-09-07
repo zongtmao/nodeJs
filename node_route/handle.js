@@ -11,13 +11,13 @@ function review(response) {
     fs.createReadStream(__dirname + "/review.html").pipe(response);
 }
 
-function apiBoxs(response) {
+function apiBoxs(response, params) {
     response.writeHead(200, { "Content-type": "application/json" });
-    let jsonObj = {
-        name: 'zongtmao',
-        work: 'web'
-    }
-    response.end(JSON.stringify(jsonObj));
+    // let jsonObj = {
+    //     name: 'zongtmao',
+    //     work: 'web'
+    // }
+    response.end(JSON.stringify(params));
 }
 
 module.exports = {
